@@ -6,20 +6,16 @@ export default async function handler (req, res){
 
     if (req.method == "POST") {
         try{
+            // DB, session 정보 가져오기
             const client = await connectDB;
             const db1 = client.db("test");
             const db2 = client.db("matching");
             let session = await getServerSession(req, res, authOptions);
-
-            
-            const userEmail = await db1.collection('users').findOne({
-                email : session.user.email
-            });
             
             let summonerName = JSON.parse(JSON.stringify(req.body)).summonerName;
 
             await db2.collection('userInfo').insertOne({
-                userEmail : userEmail.email, 
+                userEmail : session.user.email,
                 summonerName : summonerName
             });
 
