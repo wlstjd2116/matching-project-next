@@ -45,3 +45,9 @@ body {
   align-items: center;
   display: block;
 }
+
+.user-email{
+  padding : 10px;
+  background-color: aliceblue;
+  border-radius: 10px;
+}

@@ -24,7 +24,10 @@ export default async function RootLayout({ children }) {
           <Link href="/">Home</Link>
           <Link href="/register">소환사 등록</Link>
           {
-            session ? <span><LogOutBtn/>{session}"님 환영합니다."</span> : <LoginBtn/> 
+            session ? <span>
+              <span className='user-email'>{session.user.email}님 환영합니다</span>
+               <LogOutBtn/>
+              </span> : <LoginBtn/> 
           }
         </div>
         {children}
