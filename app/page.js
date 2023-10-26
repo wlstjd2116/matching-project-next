@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 
 export default function Home() {
-  let apiKey = "RGAPI-beadf3fe-e3a0-475d-ab2d-629c0dd68327";
+  let apiKey = "RGAPI-4bf6d170-f04e-495e-9651-46dbf051126d";
   let userTier = '';
   let userSummonerName = '노란후추';
   let encId = '';
@@ -29,10 +29,10 @@ export default function Home() {
           } else {
             userTier = "UnRanked";
           }
-        }
-      })
-    })
-  });
+        } // for end
+      }) // then end 
+    })  // then end 
+  }); // useEffect end
 
   return (
     <div>

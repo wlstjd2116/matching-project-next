@@ -5,7 +5,7 @@ export default async function handler (req, res){
     const client = await connectDB;
     const db = client.db("matching");
     
-    let matchingSeq = db.collection('sequences').findOneAndUpdate(
+    let matchingSeq = await db.collection('sequences').findOneAndUpdate(
         {_id: "matchingID"}, 
         {
             $inc: {
@@ -20,7 +20,7 @@ export default async function handler (req, res){
         summoner : '노란후추',
         tier : 'DIAMOND3'
     }
-    let insertResult = db.collection('matchTable').insertOne(insertValue);
+    let insertResult = await db.collection('matchTable').insertOne(insertValue);
     
 }
 
