@@ -1,4 +1,5 @@
 import { connectDB } from "@/util/database";
+import { NextResponse } from "next/server";
 
 export default async function handler (req, res){
     
@@ -21,6 +22,8 @@ export default async function handler (req, res){
         tier : 'DIAMOND3'
     }
     let insertResult = await db.collection('matchTable').insertOne(insertValue);
+
+
     
 }
 

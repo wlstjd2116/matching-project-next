@@ -16,7 +16,6 @@ body {
   background: white;
   padding: 10px;
   border-radius: 10px;
-
 }
 
 .comBtn {
@@ -27,11 +26,12 @@ body {
 }
 
 .main-btn {
+  background: whitesmoke;
   margin: 0 auto;
-  border: none;
+  border: 1px solid;
   border-radius: 10px;
-  width: 20%;
-  height: 10%;
+  width: 100px;
+  height: 40px;
 }
 
 .wrap {
@@ -47,7 +47,22 @@ body {
 }
 
 .user-email{
-  padding : 10px;
+  padding : 12px;
   background-color: aliceblue;
   border-radius: 10px;
+  margin-right : 10px;
+}
+
+.main-info {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.sub-info {
+  margin: 0 auto;
+  width: 30%;
+  height: 30%;
+  align-items: center;
+  padding: 15px;
 }
