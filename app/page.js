@@ -1,5 +1,6 @@
 'use client'
-import MatchingBtn from "@/clientComponents/matchingBtn";
+import MatchingBtn from "@/clientComponents/MatchingBtn";
+import SummonerInfo from "@/clientComponents/SummonerInfo";
 import axios from "axios";
 import { useEffect, useState } from "react"
 
@@ -8,7 +9,7 @@ export default function Home() {
   const [userName, setUserName] = useState('');
   const [tier, setTier] = useState('');
   
-  let apiKey = "RGAPI-eb5b8658-daa1-4119-b44c-9fc72fcadb44";
+  let apiKey = "RGAPI-ab851428-1357-4e11-b583-21d572fbc946";
   let userTier = '';
   let encId = '';
   let userTempName = '';
@@ -25,14 +26,12 @@ export default function Home() {
         url : 'https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+ res.data +'?api_key='+apiKey,
         headers : "application/json"
       }).then((result)=>{
-        console.log("왜이리 많이 호출되지3");
         encId = result.data.id
         axios({
           method : "get",
           url : insertEncId(encId, apiKey),
           headers : "application/json"
         }).then((result)=>{
-          console.log("왜이리 많이 호출되지4");
   
           const res = result.data;
   
@@ -57,9 +56,8 @@ export default function Home() {
   return (
     <div className="main-info">
       <div className="sub-info">
-        <span>소환사 이름 : {userName}</span><br/>
-        <span>티어 : {tier}</span><br/>
-        <MatchingBtn userName={userName} userTier={userTier}/></div>
+        <SummonerInfo userName={userName} tier={tier}/>
+        <MatchingBtn userName={userName} userTier={tier}/></div>
     </div>
   )
 }

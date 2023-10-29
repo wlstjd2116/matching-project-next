@@ -28,10 +28,12 @@ body {
 .main-btn {
   background: whitesmoke;
   margin: 0 auto;
-  border: 1px solid;
-  border-radius: 10px;
-  width: 100px;
-  height: 40px;
+  border: 10px solid slateblue;
+  border-radius: 100px;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  margin-top:100px;
 }
 
 .wrap {
@@ -61,7 +63,7 @@ body {
 
 .sub-info {
   margin: 0 auto;
-  width: 30%;
+  width: 15%;
   height: 30%;
   align-items: center;
   padding: 15px;
