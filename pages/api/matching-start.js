@@ -3,15 +3,13 @@ import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
 export default async function handler (req, res){
-    
+    const userName = req.body.name;
     try{
         const client = await connectDB;
         const db = client.db("matching");
-        const userName = req.body.name;
         let session = await getServerSession(req, res, authOptions);
-
         let matchedUsers = {};
-        
+
         // matching Number 1씩 증가하는 sequence
         let matchingSeq = await db.collection('sequences').findOneAndUpdate(
             {_id: "matchingID"}, 
@@ -46,27 +44,23 @@ export default async function handler (req, res){
             console.log(matchFinder.summoner, '님과 ', userName, '님 매칭 완료');
             const inputToMatchedTable = await db.collection('matched').insertOne({
                 players : [userName, matchFinder.summoner]
-            })
+            });
 
             let matcherName = await db.collection('matchTable').deleteMany(
                 {summoner : matchFinder.summoner}
             );
-
             console.log(matchFinder.summoner, '님과 ', userName, '님 매칭 완료');
-
             return res.status(200).json(matchedUsers);
         }
         
         
         let insertResult = await db.collection('matchTable').insertOne(insertValue);
-        
         console.log(userName+'님이 정상적으로 MatchingTable에 올랐습니다.');
-
         return res.status(200).json('success');
 
     }catch(er) {
-        console.log(userName+ '님 매칭 중 오류 발생')
-        return res.status(500).send('실패')
+        console.log(userName+ '님 매칭 중 오류 발생 :', er);
+        return res.status(500).send('실패');
         
     }
     

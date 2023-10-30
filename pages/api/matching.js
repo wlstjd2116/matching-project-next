@@ -9,12 +9,10 @@ export default async function handler (req, res){
             const client = await connectDB;
             const db = client.db("matching");
 
-            await db.collection('matched').findOne({
-                players : req.body.user
+        const userListFinder = await db.collection('matched').find({
+                players : {$in : [req.body.user]}
             });
-
-
-            
+            return res.status(200).json(userListFinder);
         }catch(error) {
             console.log('에러발생', error)
         }

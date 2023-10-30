@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function MatchingBtn(props){
 
@@ -7,18 +7,26 @@ export default function MatchingBtn(props){
     const [cssVal, setCssVal] = useState(false);
     let matchingCount = 0;
     let data; 
+    let getUserList = setInterval(callback, 2000);
 
-    if(status  == true){
-        setInterval(()=>{
-            axios.post('api/matching', {
-                user : props.userName
-            }).then((res)=>{
-                
-            });
-        }, 2000);
+    function callback() {
+
+        axios.post('api/matching', {
+            user : props.userName
+        }).then((res)=>{
+            console.log(res.data);
+        });
+
     }
-
-    
+    useEffect(()=>{
+        if(status  == true){
+            console.log('if : ',getUserList);
+            //getUserList;
+        }else if (status == false){
+            console.log('else if : ',getUserList);
+            clearInterval(getUserList);
+        }
+    }, [status]);
 
     return (
         // Match Start & Match End
@@ -29,8 +37,6 @@ export default function MatchingBtn(props){
                         tier : props.userTier
                     }).then((res)=>{
                         setStatus(true)
-                        data = res;
-                        console.log(data);
                     });
                         setCssVal(true);
                         setTimeout(()=>{setCssVal(false)}, 2000)
@@ -45,8 +51,7 @@ export default function MatchingBtn(props){
                     }, 2000)
 
                 }
-                console.log(status);
-                console.log('cssval ; ',cssVal);
+
             }} disabled={cssVal}>
             {
                 status ?
