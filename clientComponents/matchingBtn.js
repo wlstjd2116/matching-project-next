@@ -8,6 +8,18 @@ export default function MatchingBtn(props){
     let matchingCount = 0;
     let data; 
 
+    if(status  == true){
+        setInterval(()=>{
+            axios.post('api/matching', {
+                user : props.userName
+            }).then((res)=>{
+                
+            });
+        }, 2000);
+    }
+
+    
+
     return (
         // Match Start & Match End
             <button className="main-btn" onClick={()=>{

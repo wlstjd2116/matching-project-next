@@ -9,7 +9,7 @@ export default function Home() {
   const [userName, setUserName] = useState('');
   const [tier, setTier] = useState('');
   
-  let apiKey = "RGAPI-ab851428-1357-4e11-b583-21d572fbc946";
+  let apiKey = "RGAPI-3697989f-ba43-4bfe-9281-51c8d56216b8";
   let userTier = '';
   let encId = '';
   let userTempName = '';

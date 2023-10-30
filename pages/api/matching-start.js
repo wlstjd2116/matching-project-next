@@ -1,5 +1,6 @@
 import { connectDB } from "@/util/database";
-import { NextResponse } from "next/server";
+import { authOptions } from "./auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 export default async function handler (req, res){
     
@@ -7,9 +8,11 @@ export default async function handler (req, res){
         const client = await connectDB;
         const db = client.db("matching");
         const userName = req.body.name;
+        let session = await getServerSession(req, res, authOptions);
 
         let matchedUsers = {};
-
+        
+        // matching Number 1씩 증가하는 sequence
         let matchingSeq = await db.collection('sequences').findOneAndUpdate(
             {_id: "matchingID"}, 
             {
@@ -23,7 +26,8 @@ export default async function handler (req, res){
         let insertValue = {
             matchNumber : matchingSeq.value.seq,
             summoner : userName,
-            tier : req.body.tier
+            tier : req.body.tier,
+            email : session.user.email
         }
         
         let matchFinder = await db.collection('matchTable').findOne({
@@ -38,21 +42,16 @@ export default async function handler (req, res){
         } 
         // 매칭 상대가 있다면 매칭테이블에 올리지 않고 바로 return, 기존 매칭 상대 remove
         else if (matchFinder != null && matchFinder != userName) {
-            // matchedUsers = {
-            //     player1 : matchFinder.summoner,
-            //     player2 : userName
-            // }
 
             console.log(matchFinder.summoner, '님과 ', userName, '님 매칭 완료');
-            await db.collection('matched').insertOne({
-                player1 : matchFinder.summoner,
-                player2 : userName
+            const inputToMatchedTable = await db.collection('matched').insertOne({
+                players : [userName, matchFinder.summoner]
             })
 
             let matcherName = await db.collection('matchTable').deleteMany(
                 {summoner : matchFinder.summoner}
             );
-            
+
             console.log(matchFinder.summoner, '님과 ', userName, '님 매칭 완료');
 
             return res.status(200).json(matchedUsers);
