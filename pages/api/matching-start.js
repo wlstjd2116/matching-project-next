@@ -61,12 +61,6 @@ export default async function handler (req, res){
     }catch(er) {
         console.log(userName+ '님 매칭 중 오류 발생 :', er);
         return res.status(500).send('실패');
-        
     }
-    
-   
-
-
-    
 }
 

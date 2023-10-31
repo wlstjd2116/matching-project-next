@@ -5,26 +5,25 @@ export default function MatchingBtn(props){
 
     const [status, setStatus] = useState(false);
     const [cssVal, setCssVal] = useState(false);
+    const [UserList, setUserList] = useState(null);
+
     let matchingCount = 0;
     let data; 
-    let getUserList = setInterval(callback, 2000);
 
-    function callback() {
-
-        axios.post('api/matching', {
-            user : props.userName
-        }).then((res)=>{
-            console.log(res.data);
-        });
-
-    }
     useEffect(()=>{
-        if(status  == true){
-            console.log('if : ',getUserList);
-            //getUserList;
-        }else if (status == false){
-            console.log('else if : ',getUserList);
-            clearInterval(getUserList);
+        if(status){
+            const intervalId = setInterval(()=>{
+                axios.post('api/matching', {
+                    user : props.userName
+                }).then((res)=>{
+                    console.log(res.data);
+                })
+            }, 2000);
+
+            setUserList(intervalId);
+        }else {
+            // when status == false => clearInterval
+            clearInterval(UserList);
         }
     }, [status]);
 
