@@ -19,10 +19,7 @@ export default async function handler (req, res){
                 summonerName : summonerName
             });
 
-            // find 유저 값
-            // const testValue = await db2.collection('userInfo').findOne({
-            //     userEmail : userEmail.email
-            // });
+            return res.status(200).JSON('OK');
 
             
         }catch(error) {

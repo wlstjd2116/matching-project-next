@@ -13,9 +13,7 @@ export default async function handler (req, res){
             let summonerInfo = await db2.collection('userInfo').findOne({
                 userEmail : session.user.email,
             });
-
-            console.log(summonerInfo);
-
+            
             let userName = summonerInfo.summonerName;
 
             if (userName) {

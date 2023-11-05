@@ -5,6 +5,7 @@ import LoginBtn from '../clientComponents/LoginBtn'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import LogOutBtn from '../clientComponents/LogOutBtn'
+import { SocketProvider } from '@/clientComponents/socket-provider';
 
 const inter = Inter({ subsets: ['latin'] })
 

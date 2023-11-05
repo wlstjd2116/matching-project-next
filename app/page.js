@@ -1,5 +1,5 @@
 'use client'
-import MatchingBtn from "@/clientComponents/MatchingBtn";
+import MatchingBtn from "@/clientComponents/matchingBtn";
 import SummonerInfo from "@/clientComponents/SummonerInfo";
 import axios from "axios";
 import { useEffect, useState } from "react"
@@ -14,7 +14,6 @@ export default function Home() {
   let encId = '';
   let userTempName = '';
 
-  console.log(apiKey)
   useEffect(()=>{
     axios({
       method:"get",

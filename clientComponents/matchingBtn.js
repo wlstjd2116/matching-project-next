@@ -13,10 +13,17 @@ export default function MatchingBtn(props){
     useEffect(()=>{
         if(status){
             const intervalId = setInterval(()=>{
+                console.log('테스트 중');
                 axios.post('api/matching', {
                     user : props.userName
                 }).then((res)=>{
-                    console.log(res.data);
+                    let player = res.data.players; 
+                    console.log(player);
+                    for (let i=0; i<player.length; i++){
+                        if(player[i] == props.userName){
+                            location.href = "/chat"
+                        }
+                    }                    
                 })
             }, 2000);
 
@@ -35,9 +42,6 @@ export default function MatchingBtn(props){
                         name : props.userName,
                         tier : props.userTier
                     }).then((res)=>{
-                        
-
-                        
                         setStatus(true)
                     });
                         setCssVal(true);
