@@ -9,16 +9,23 @@ export default async function handler (req, res){
             const client = await connectDB;
             const db = client.db("matching");
 
-            const userListFinder = await db.collection('matched').find({
-                players : {$in : [req.body.user]}
+            const userListFinder = await db.collection('matched').findOne({
+                players : {
+                    $in : [req.body.user]
+                }
             });
-            console.log(userListFinder.body);
 
-            if (userListFinder.body != undefined) {
+            console.log("matching2     .js : ",userListFinder);
+                
+            if (userListFinder != undefined) {
+                console.log(userListFinder + '두 명 매칭 완료. DB에서 제거합니다.')
+                
                 return res.status(200).json(userListFinder);    
             } else {
                 return res.status(200).json('매칭 상대를 찾는 중입니다.');
             }
+
+            
             
         }catch(error) {
             console.log('에러발생', error)

@@ -14,8 +14,15 @@ export default async function handler (req, res){
                 userEmail : session.user.email,
             });
 
+            console.log(summonerInfo);
+
             let userName = summonerInfo.summonerName;
-            return res.status(200).json(userName);
+
+            if (userName) {
+                return res.status(200).json(userName);
+            } else { return res.status(200).json(null); }
+
+            
             
         }catch(error) {
             console.log('에러발생: ', error)
