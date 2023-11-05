@@ -8,7 +8,14 @@ export default async function handler (req, res){
         const client = await connectDB;
         const db = client.db("matching");
         let session = await getServerSession(req, res, authOptions);
-        let matchedUsers = {};
+        let matchedUsers = [];
+
+        // 매칭 테이블에 올라가 있다면 삭제하고 시작
+        await db.collection('matched').deleteMany({
+            players : {
+                $in : [req.body.user]
+            }
+        });
 
         // matching Number 1씩 증가하는 sequence
         let matchingSeq = await db.collection('sequences').findOneAndUpdate(
@@ -28,6 +35,7 @@ export default async function handler (req, res){
             email : session.user.email
         }
         
+        // 매칭 테이블에 티어 같은 유저 찾기
         let matchFinder = await db.collection('matchTable').findOne({
             tier : req.body.tier
         });
@@ -41,7 +49,6 @@ export default async function handler (req, res){
         // 매칭 상대가 있다면 매칭테이블에 올리지 않고 바로 return, 기존 매칭 상대 remove
         else if (matchFinder != null && matchFinder != userName) {
 
-            console.log(matchFinder.summoner, '님과 ', userName, '님 매칭 완료');
             const inputToMatchedTable = await db.collection('matched').insertOne({
                 players : [userName, matchFinder.summoner]
             });
@@ -49,10 +56,11 @@ export default async function handler (req, res){
             let matcherName = await db.collection('matchTable').deleteMany(
                 {summoner : matchFinder.summoner}
             );
+            matchedUsers.push(matchFinder.summoner);
+            matchedUsers.push(userName);
             console.log(matchFinder.summoner, '님과 ', userName, '님 매칭 완료');
             return res.status(200).json(matchedUsers);
         }
-        
         
         let insertResult = await db.collection('matchTable').insertOne(insertValue);
         console.log(userName+'님이 정상적으로 MatchingTable에 올랐습니다.');

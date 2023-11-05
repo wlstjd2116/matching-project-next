@@ -35,6 +35,9 @@ export default function MatchingBtn(props){
                         name : props.userName,
                         tier : props.userTier
                     }).then((res)=>{
+                        
+
+                        
                         setStatus(true)
                     });
                         setCssVal(true);
