@@ -9,5 +9,5 @@ export default withApiAuthRequired(async function socket(req, res) {
 
   wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
     wss.emit('connection', ws, req);
-  });
+  }); 
 });
